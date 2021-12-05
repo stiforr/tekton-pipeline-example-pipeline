@@ -37,7 +37,7 @@ spec:
       params:
       - name: url
         # Replace <docker_registry_name> with your docker registry name (e.g. my-acr.azurecr.io)
-        value: 'https://docker.io'
+        value: 'https://docker.io/stiforr'
       type: image
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
