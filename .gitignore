@@ -1,3 +1,4 @@
 *_secrets.env
 .DS_Store
 scratchpad.md
+/tekton-pipeline-example-pipeline.iml
