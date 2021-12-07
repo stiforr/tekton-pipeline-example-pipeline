@@ -86,7 +86,7 @@ spec:
     template:
       ref: tekton-argocd-example-build-tt
 
-#---
+---
 #
 #apiVersion: getambassador.io/v2
 #kind: Mapping
