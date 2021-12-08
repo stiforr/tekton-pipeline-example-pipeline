@@ -3,63 +3,60 @@ kind: TriggerTemplate
 metadata:
   name: tekton-argocd-example-build-tt
 spec:
-  params: 
-  - name: git-app-repo-url
-  - name: git-app-repo-name
-  - name: git-app-repo-revision
+  params:
+    - name: git-app-repo-url
+    - name: git-app-repo-revision
   resourcetemplates:
-  - apiVersion: tekton.dev/v1alpha1
-    kind: PipelineResource
-    metadata:
-      name: git-app-repo-$(uid)
-      namespace: tekton-argocd-example
-      labels:
-        pipeline: tekton
-        deploy: argocd
-    spec:
-      params:
-      - name: url
-        value: $(tt.params.git-app-repo-url)
-      - name: revision
-        value: $(tt.params.git-app-repo-revision)
-      - name: git-app-repo-name
-        value: $(tt.params.git-app-repo-name)
-      type: git
-  - apiVersion: tekton.dev/v1alpha1
-    kind: PipelineResource
-    metadata:
-      name: image-registry-$(uid)
-      namespace: tekton-argocd-example
-      labels:
-        pipeline: tekton
-        deploy: argocd
-    spec:
-      params:
-      - name: url
-        # Replace <docker_registry_name> with your docker registry name (e.g. my-acr.azurecr.io)
-        value: 'harbor.k8s.stiforr.tech'
-      type: image
-  - apiVersion: tekton.dev/v1beta1
-    kind: PipelineRun
-    metadata:
-      generateName: tekton-argocd-example-build-deploy-pipeline-run-
-      namespace: tekton-argocd-example
-      labels:
-        pipeline: tekton
-        deploy: argocd
-    spec:
-      serviceAccountName: pipeline-sa
-      pipelineRef:
-        name: tekton-argocd-example-build-deploy-pipeline
-      resources:
-      - name: git-app-repo
-        resourceRef:
-          name: git-app-repo-$(uid)
-      - name: image-registry
-        resourceRef:
-          name: image-registry-$(uid)
+    - apiVersion: tekton.dev/v1alpha1
+      kind: PipelineResource
+      metadata:
+        name: git-app-repo-$(uid)
+        namespace: tekton-argocd-example
+        labels:
+          pipeline: tekton
+          deploy: argocd
+      spec:
+        params:
+          - name: url
+            value: $(tt.params.git-app-repo-url)
+          - name: revision
+            value: $(tt.params.git-app-repo-revision)
+        type: git
+    - apiVersion: tekton.dev/v1alpha1
+      kind: PipelineResource
+      metadata:
+        name: image-registry-$(uid)
+        namespace: tekton-argocd-example
+        labels:
+          pipeline: tekton
+          deploy: argocd
+      spec:
+        params:
+          - name: url
+            # Replace <docker_registry_name> with your docker registry name (e.g. my-acr.azurecr.io)
+            value: 'harbor.k8s.stiforr.tech'
+        type: image
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: tekton-argocd-example-build-deploy-pipeline-run-
+        namespace: tekton-argocd-example
+        labels:
+          pipeline: tekton
+          deploy: argocd
+      spec:
+        serviceAccountName: pipeline-sa
+        pipelineRef:
+          name: tekton-argocd-example-build-deploy-pipeline
+        resources:
+          - name: git-app-repo
+            resourceRef:
+              name: git-app-repo-$(uid)
+          - name: image-registry
+            resourceRef:
+              name: image-registry-$(uid)
 
---- 
+---
 
 apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerBinding
@@ -67,10 +64,10 @@ metadata:
   name: tekton-argocd-example-build-git-tb
 spec:
   params:
-  - name: git-app-repo-url
-    value: $(body.repository.url)
-  - name: git-app-repo-revision
-    value: master
+    - name: git-app-repo-url
+      value: $(body.repository.url)
+    - name: git-app-repo-revision
+      value: master
 
 ---
 
@@ -81,17 +78,7 @@ metadata:
 spec:
   serviceAccountName: tekton-triggers-admin
   triggers:
-  - bindings:
-    - ref: tekton-argocd-example-build-git-tb
-    template:
-      ref: tekton-argocd-example-build-tt
-
----
-#
-#apiVersion: getambassador.io/v2
-#kind: Mapping
-#metadata:
-#  name: tekton-argocd-example-build-el-mapping
-#spec:
-#  prefix: /tekton-argocd-example-build-mapping/
-#  service: el-tekton-argocd-example-build-el:8080
+    - bindings:
+        - ref: tekton-argocd-example-build-git-tb
+      template:
+        ref: tekton-argocd-example-build-tt
