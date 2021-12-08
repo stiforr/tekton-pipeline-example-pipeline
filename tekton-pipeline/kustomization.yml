@@ -10,8 +10,6 @@ commonLabels:
 resources:
 - resources/pipeline-admin-role.yml
 - resources/triggers-admin-role.yml
-- resources/build-task-cm.yml
-- resources/argocd-task-cm.yml
 - tasks/build-task.yml
 - tasks/argocd-task.yml
 - pipelines/build-deploy-pipeline.yml

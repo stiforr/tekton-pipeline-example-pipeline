@@ -7,17 +7,22 @@ spec:
     - name: flags
       default: --
     - name: argocd-version
-      default: v1.7.6
+      default: v2.1.7
+    - name: argocdServer
+      description: The URL of the ArgoCD server
+    - name: applicationName
+      description: The name of the application to sync
+    - name: applicationRevision
+      description: The revision of the application to sync
+      default: HEAD
   stepTemplate:
     envFrom:
-      - configMapRef:
-          name: argocd-env-configmap  # used for server address
       - secretRef:
           name: argocd-env-secret  # used for authentication (username/password or auth token)
   steps:
     - name: argocd-app-sync
       image: argoproj/argocd:$(params.argocd-version)
       script: |
-        argocd login $ARGOCD_SERVER --grpc-web --grpc-web-root-path /argo-cd --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD
-        argocd app sync $ARGOCD_APPLICATION_NAME $(params.flags) --grpc-web-root-path /argo-cd --server $ARGOCD_SERVER
-        argocd app wait $ARGOCD_APPLICATION_NAME --health $(params.flags) --grpc-web-root-path /argo-cd --server $ARGOCD_SERVER
+        argocd login $(params.argocdServer) --grpc-web --grpc-web-root-path /argo-cd --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD
+        argocd app sync $(params.applicationName) $(params.flags) --grpc-web-root-path /argo-cd --server $(params.argocdServer)
+        argocd app wait $(params.applicationName) --health $(params.flags) --grpc-web-root-path /argo-cd --server $(params.argocdServer)
