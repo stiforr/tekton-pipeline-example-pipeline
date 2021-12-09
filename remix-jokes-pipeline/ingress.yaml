@@ -1,7 +1,7 @@
 kind: IngressRoute
 apiVersion: traefik.containo.us/v1alpha1
 metadata:
-  name: el-tekton-argocd-example-build-el-ingress
+  name: el-remix-jokes-el-ingress
   namespace: traefik
 spec:
   entryPoints:
@@ -9,9 +9,9 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: PathPrefix(`/el-tekton-argocd-example-build-el`)
+      match: PathPrefix(`/el-remix-jokes-el`)
       services:
-        - name: el-tekton-argocd-example-build-el
+        - name: el-remix-jokes-el
           port: 8080
           namespace: tekton-argocd-example
   tls:
