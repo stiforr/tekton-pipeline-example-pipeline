@@ -58,7 +58,7 @@ spec:
             value: stiforr
         serviceAccountName: pipeline-sa
         pipelineRef:
-          name: remix-jokes-build-deploy-pipeline
+          name: tekton-argocd-example-build-deploy-pipeline
         resources:
           - name: git-app-repo
             resourceRef:
