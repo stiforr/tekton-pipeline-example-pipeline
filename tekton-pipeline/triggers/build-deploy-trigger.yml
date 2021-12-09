@@ -50,10 +50,8 @@ spec:
         params:
           - name: argocdServer
             value: stiforr.com
-            description: The URL of the argocd server.
           - name: applicationName
             value: 2048-game-app
-            description: The name of the application.
           - name: dockerImage
             value: 2048-app
           - name: dockerNamespace
