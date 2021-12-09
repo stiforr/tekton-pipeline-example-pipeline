@@ -18,6 +18,10 @@ spec:
           value: Dockerfile
         - name: pathToContext
           value: /workspace/git-app-repo
+        - name: dockerImage
+          value: 2048-app
+        - name: dockerNamespace
+          value: stiforr
       resources:
         inputs:
           - name: git-app-repo
