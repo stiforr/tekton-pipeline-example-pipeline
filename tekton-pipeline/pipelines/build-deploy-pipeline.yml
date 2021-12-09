@@ -19,9 +19,13 @@ spec:
         - name: pathToContext
           value: /workspace/git-app-repo
         - name: dockerImage
-          value: 2048-app
+          value: $(params.dockerImage)
         - name: dockerNamespace
-          value: stiforr
+          value: $(params.dockerNamespace)
+        - name: argocdServer
+          value: $(params.argocdServer)
+        - name: applicationName
+          value: $(params.applicationName)
       resources:
         inputs:
           - name: git-app-repo

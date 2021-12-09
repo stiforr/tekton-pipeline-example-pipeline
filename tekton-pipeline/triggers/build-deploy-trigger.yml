@@ -54,6 +54,10 @@ spec:
           - name: applicationName
             value: 2048-game-app
             description: The name of the application.
+          - name: dockerImage
+            value: 2048-app
+          - name: dockerNamespace
+            value: stiforr
         serviceAccountName: pipeline-sa
         pipelineRef:
           name: tekton-argocd-example-build-deploy-pipeline
