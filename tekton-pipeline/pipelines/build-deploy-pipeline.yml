@@ -36,4 +36,8 @@ spec:
         - build-docker-image
       params:
         - name: flags
-          value: --insecure # needed in this example only because the Argo CD server is locally hosted
+          value: --insecure
+        - name: argocdServer
+          value: stiforr.com
+        - name: applicationName
+          value: 2048-game-app
