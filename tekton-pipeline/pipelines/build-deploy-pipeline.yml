@@ -29,6 +29,7 @@ spec:
         outputs:
           - name: image-registry
             resource: image-registry
+
     - name: sync-application
       taskRef:
         name: argocd-task-sync-and-wait
@@ -38,6 +39,6 @@ spec:
         - name: flags
           value: --insecure
         - name: argocdServer
-          value: stiforr.com
+          value: $(params.argocdServer)
         - name: applicationName
-          value: 2048-game-app
+          value: $(params.applicationName)

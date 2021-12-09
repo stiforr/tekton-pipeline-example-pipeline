@@ -5,7 +5,9 @@ metadata:
 spec:
   params:
     - name: git-app-repo-url
+      description: The git repository URL for the application.
     - name: git-app-repo-revision
+      description: The git revision for the application.
   resourcetemplates:
     - apiVersion: tekton.dev/v1alpha1
       kind: PipelineResource
@@ -45,6 +47,13 @@ spec:
           pipeline: tekton
           deploy: argocd
       spec:
+        params:
+          - name: argocdServer
+            value: stiforr.com
+            description: The URL of the argocd server.
+          - name: applicationName
+            value: 2048-game-app
+            description: The name of the application.
         serviceAccountName: pipeline-sa
         pipelineRef:
           name: tekton-argocd-example-build-deploy-pipeline
