@@ -4,6 +4,11 @@ kind: Pipeline
 metadata:
   name: tekton-argocd-example-build-deploy-pipeline
 spec:
+  params:
+    - name: dockerImage
+    - name: dockerNamespace
+    - name: argocdServer
+    - name: applicationName
   resources:
     - name: git-app-repo
       type: git
@@ -22,10 +27,6 @@ spec:
           value: $(params.dockerImage)
         - name: dockerNamespace
           value: $(params.dockerNamespace)
-        - name: argocdServer
-          value: $(params.argocdServer)
-        - name: applicationName
-          value: $(params.applicationName)
       resources:
         inputs:
           - name: git-app-repo
