@@ -12,5 +12,7 @@ resources:
 - resources/triggers-admin-role.yml
 - tasks/build-task.yml
 - tasks/argocd-task.yml
+- tasks/git-clone.yaml
+- tasks/buildpacks.yaml
 - pipelines/build-deploy-pipeline.yml
 - triggers/build-deploy-trigger.yml
