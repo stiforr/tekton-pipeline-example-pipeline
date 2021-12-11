@@ -15,4 +15,5 @@ resources:
 - tasks/git-clone.yaml
 - tasks/buildpacks.yaml
 - pipelines/build-deploy-pipeline.yml
+- pipelines/buildpacks-test-pipeline.yaml
 - triggers/build-deploy-trigger.yml
