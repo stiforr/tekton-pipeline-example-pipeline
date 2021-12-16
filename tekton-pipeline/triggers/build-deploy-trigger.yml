@@ -46,6 +46,8 @@ spec:
         labels:
           pipeline: tekton
           deploy: argocd
+        annotations:
+          argocd.argoproj.io/compare-options: IgnoreExtraneous
       spec:
         params:
           - name: argocdServer
