@@ -7,7 +7,7 @@ spec:
     - name: image
       type: string
       description: image URL to push
-    - name: git-repo
+    - name: git-app-repo-url
       type: string
       description: git repo to use
   workspaces:
