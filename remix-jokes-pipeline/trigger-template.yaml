@@ -18,6 +18,8 @@ spec:
         labels:
           pipeline: tekton
           deploy: argocd
+        annotations:
+          argocd.argoproj.io/compare-options: IgnoreExtraneous
       spec:
         workspaces:
           - name: source-workspace
