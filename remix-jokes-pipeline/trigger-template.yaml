@@ -41,7 +41,7 @@ spec:
             value: remix-jokes
           - name: dockerNamespace
             value: stiforr
-          - name: git-app-repo-revision
+          - name: git-app-repo-url
             value: $(tt.params.git-app-repo-url)
         serviceAccountName: pipeline-sa
         pipelineRef:
