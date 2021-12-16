@@ -22,7 +22,7 @@ spec:
           workspace: source-workspace
       params:
         - name: url
-          value: $(params.git-repo)
+          value: $(params.git-app-repo-url)
         - name: subdirectory
           value: ""
         - name: deleteExisting
