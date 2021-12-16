@@ -1,0 +1,67 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: buildpack-test-tt
+spec:
+  params:
+    - name: git-app-repo-url
+      description: The git repository URL for the application.
+    - name: git-app-repo-revision
+      description: The git revision for the application.
+
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: buildpack-test-pr-
+        namespace: tekton-argocd-example
+        labels:
+          pipeline: tekton
+          deploy: argocd
+      spec:
+        workspaces:
+          - name: source-workspace
+            subPath: source
+          - name: cache-workspace
+            subPath: cache
+        params:
+          - name: image
+            value: stiforr/buildback-test
+          - name: argocdServer
+            value: stiforr.com
+          - name: applicationName
+            value: buildpack-test
+          - name: dockerImage
+            value: remix-jokes
+          - name: dockerNamespace
+            value: stiforr
+        serviceAccountName: pipeline-sa
+        pipelineRef:
+          name: buildpacks-test-pipeline
+
+---
+
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: remix-jokes-tb
+spec:
+  params:
+    - name: git-app-repo-url
+      value: $(body.repository.url)
+    - name: git-app-repo-revision
+      value: main
+
+---
+
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: remix-jokes-el
+spec:
+  serviceAccountName: tekton-triggers-admin
+  triggers:
+    - bindings:
+        - ref: remix-jokes-tb
+      template:
+        ref: remix-jokes-tt

@@ -7,6 +7,9 @@ spec:
     - name: image
       type: string
       description: image URL to push
+    - name: git-repo
+      type: string
+      description: git repo to use
   workspaces:
     - name: source-workspace # Directory where application source is located. (REQUIRED)
     - name: cache-workspace # Directory where cache is stored (OPTIONAL)
@@ -19,7 +22,7 @@ spec:
           workspace: source-workspace
       params:
         - name: url
-          value: https://github.com/buildpacks/samples
+          value: $(params.git-repo)
         - name: subdirectory
           value: ""
         - name: deleteExisting
@@ -37,10 +40,8 @@ spec:
       params:
         - name: APP_IMAGE
           value: "$(params.image)"
-        - name: SOURCE_SUBPATH
-          value: "apps/java-maven" # This is the path within the samples repo you want to build (OPTIONAL, default: "")
         - name: BUILDER_IMAGE
-          value: paketobuildpacks/builder:base # This is the builder we want the task to use (REQUIRED)
+          value: gcr.io/buildpacks/builder:v1 # This is the builder we want the task to use (REQUIRED)
     - name: display-results
       runAfter:
         - buildpacks
